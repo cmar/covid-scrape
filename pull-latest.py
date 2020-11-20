@@ -12,12 +12,15 @@ with open(HISTORY_CSV_FILE, 'w') as f:
 df = pd.read_csv("covid-tracking-project.csv", index_col="date")
 df = df.sort_index(ascending=True)
 
-df['7ma'] = df["positiveIncrease"].rolling(window=7).mean()
+df.rename(columns={'positiveIncrease': 'dailycases'}, inplace=True)
+
+
+df['7ma'] = df["dailycases"].rolling(window=7).mean()
 df['7ma'] = df["7ma"].apply(lambda x: 0 if pd.isnull(x) else int(x))
 
-print(df[['positiveIncrease', '7ma']].tail(20))
+print(df[['dailycases', '7ma']].tail(20))
 
-df[['positiveIncrease', '7ma']].tail(20).to_csv('latest.csv')
+df[['dailycases', '7ma']].tail(20).to_csv('latest.csv')
 
 os.remove(HISTORY_CSV_FILE)
 
