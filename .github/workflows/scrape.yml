@@ -3,7 +3,7 @@ name: Scrape latest data
 on:
   push:
   schedule:
-    - cron:  '*/5 * * * *'
+    - cron:  '*/15 * * * *'
 
 jobs:
   scheduled:
